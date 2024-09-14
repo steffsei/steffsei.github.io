@@ -72,7 +72,7 @@
   (setq show-paren-delay 0)
   (show-paren-mode t) ; parentheses highlighting
   (add-to-list 'default-frame-alist '(fullscreen . maximized))
-  (set-face-attribute 'default nil :height 140) ; change font size
+  (set-face-attribute 'default nil :height 120) ; change font size
 
   (setq scroll-margin 3
   scroll-conservatively 10000)
@@ -88,19 +88,6 @@
   (setq make-backup-files nil)
 #+end_src
 
-* Google mode
-#+begin_src emacs-lisp
-;; google this mode  C-c / <enter>   or  C-c / SPC (google this region)
-(require 'google-this)
-(use-package google-this
-  :config
-  (google-this-mode 1))
-#+end_src
-
-* Magit
-#+begin_src emacs-lisp
-  (use-package magit  :ensure t)
-#+end_src
 * SimpleHttpd
 #+begin_src emacs-lisp
   (use-package simple-httpd
@@ -109,78 +96,95 @@
 * Org mode settings
 ** Basic config
 #+begin_src emacs-lisp
-    (defun org-mode-setup ()
-      (org-indent-mode)
-      (visual-line-mode)
-      (auto-fill-mode)
-      ;;(visual-fill-column-mode) ;; problems in combination with org-indent-mode
-      )
+  (defun org-mode-setup ()
+    (org-indent-mode)
+    (visual-line-mode)
+    (auto-fill-mode)
+    ;;(visual-fill-column-mode) ;; problems in combination with org-indent-mode
+    )
 
-    (use-package org :pin gnu )
-    (use-package org-mode
-      :hook (org-mode . org-mode-setup))
+  (use-package org :pin gnu )
+  (use-package org-mode
+    :hook (org-mode . org-mode-setup))
 
-    (setq initial-major-mode 'org-mode)
-    (setq default-major-mode 'org-mode)
-    (setq org-todo-keywords
-          '((sequence "TODO(t)" "NEXT(n)" "WAIT" "|" "DONE(d)" "CANCELED(c)")))
-    (eval-after-load "org"
-      '(progn
-         (if (assoc "\\.ods\\'" org-file-apps)
-             (setcdr (assoc "\\.ods\\'" org-file-apps) "loffice %s")
-           (add-to-list 'org-file-apps '("\\.ods\\'" . "loffice %s") t))
-         (if (assoc "\\.png\\'" org-file-apps)
-             (setcdr (assoc "\\.png\\'" org-file-apps) "ristretto %s")
-           (add-to-list 'org-file-apps '("\\.png\\'" . "ristretto %s") t))
-         (if (assoc "\\.gif\\'" org-file-apps)
-             (setcdr (assoc "\\.gif\\'" org-file-apps) "ristretto %s")
-           (add-to-list 'org-file-apps '("\\.gif\\'" . "ristretto %s") t))
-         ;; Change .pdf association directly within the alist
-         (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s")))
-    (add-hook 'org-mode-hook
-              (lambda( )
-                )
+  (setq initial-major-mode 'org-mode)
+  (setq default-major-mode 'org-mode)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "WAIT" "INPROGRESS(s!)" "|" "DONE(d!)" "CANCELED(c)")))
+  (setq org-log-into-drawer t)
+  (eval-after-load "org"
+    '(progn
+       (if (assoc "\\.ods\\'" org-file-apps)
+           (setcdr (assoc "\\.ods\\'" org-file-apps) "loffice %s")
+         (add-to-list 'org-file-apps '("\\.ods\\'" . "loffice %s") t))
+       (if (assoc "\\.png\\'" org-file-apps)
+           (setcdr (assoc "\\.png\\'" org-file-apps) "ristretto %s")
+         (add-to-list 'org-file-apps '("\\.png\\'" . "ristretto %s") t))
+       (if (assoc "\\.gif\\'" org-file-apps)
+           (setcdr (assoc "\\.gif\\'" org-file-apps) "ristretto %s")
+         (add-to-list 'org-file-apps '("\\.gif\\'" . "ristretto %s") t))
+       ;; Change .pdf association directly within the alist
+       (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s")))
+  (add-hook 'org-mode-hook
+            (lambda( )
               )
+            )
+  (setq org-tag-alist
+        '(;;Places
+          ("@home" . ?H)
+          ("@work" . ?W)
+          ("@sport" . ?S)
+
+          ;;Activities
+          ("@relax" . ?r)
+          ("@communication" . ?c)
+          ("@planning" . ?p)
+          ("@programming" . ?P)
+          ("@creative" . ?C)
+          ))
+
 
 #+end_src
 ** Org-roam
 #+begin_src emacs-lisp
-    (use-package org-roam
-      :ensure t
-      :init
-      (setq org-roam-v2-ack t)
-      :custom
-      (org-roam-directory "~/Dropbox/org/roam")
-      (org-roam-dailies-directory "journal/")
-    (org-roam-completion-everywhere t)
-      :bind (("C-c n l" . org-roam-buffer-toggle)
-             ("C-c n f" . org-roam-node-find)
-             ("C-c n i" . org-roam-node-insert)
-           :map org-mode-map
-         ("C-M-j" . completion-at-point)
-       :map org-roam-dailies-map
-     ("Y" . org-roam-dailies-capture-yesterday)
-  ("T" . org-roam-dailies-capture-tomorrow)
-     )
-    :bind-keymap
-  ("C-c n d" . org-roam-dailies-map)
-      :config
-    (require 'org-roam-dailies)
-  (org-roam-db-autosync-mode)
-      (org-roam-setup))
+      (use-package org-roam
+        :ensure t
+        :init
+        (setq org-roam-v2-ack t)
+        :custom
+        (org-roam-directory "~/Dropbox/org/roam")
 
-(use-package org-roam-ui
-    :after org-roam
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+        (org-roam-dailies-directory "journal/")
+      (org-roam-completion-everywhere t)
+        :bind (("C-c n l" . org-roam-buffer-toggle)
+               ("C-c n f" . org-roam-node-find)
+               ("C-c n i" . org-roam-node-insert)
+             :map org-mode-map
+           ("C-M-j" . completion-at-point)
+         :map org-roam-dailies-map
+       ("Y" . org-roam-dailies-capture-yesterday)
+    ("T" . org-roam-dailies-capture-tomorrow)
+       )
+      :bind-keymap
+    ("C-c n d" . org-roam-dailies-map)
+        :config
+      (require 'org-roam-dailies)
+    (org-roam-db-autosync-mode)
+        (org-roam-setup))
+
+  (use-package org-roam-ui
+      :after org-roam
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+      :config
+      (setq org-roam-ui-sync-theme t
+            org-roam-ui-follow t
+            org-roam-ui-update-on-save t
+            org-roam-ui-open-on-start t))
 #+end_src
+
 ** Pomodoro
 #+begin_src emacs-lisp
 (setq org-clock-sound "~/Dropbox/audio/oriental_gong.wav")
@@ -204,23 +208,23 @@
 #+end_src
 ** UI
 #+begin_src emacs-lisp
-  ;;   (require 'org-bullets)
-  ;;   (use-package org-bullets
-  ;;                :hook (org-mode . org-bullets-mode)
-  ;;                :custom
-  ;;                (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))
-  ;;                )
-  ;;
-  ;; ;; org heading non monospace headings
-  ;; (dolist (face '((org-level-1 . 1.2)
-  ;; 		(org-level-2 . 1.1)
-  ;; 		(org-level-3 . 1.05)
-  ;; 		(org-level-4 . 1.0)
-  ;; 		(org-level-5 . 1.1)
-  ;; 		(org-level-6 . 1.1)
-  ;; 		(org-level-7 . 1.1)
-  ;; 		(org-level-8 . 1.1)))
-  ;;   (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
+     (require 'org-bullets)
+     (use-package org-bullets
+                  :hook (org-mode . org-bullets-mode)
+                  :custom
+                  (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●"))
+                  )
+
+   ;; org heading non monospace headings
+   ;(dolist (face '((org-level-1 . 1.2)
+   ;		(org-level-2 . 1.1)
+   ;		(org-level-3 . 1.05)
+   ;		(org-level-4 . 1.0)
+   ;		(org-level-5 . 1.1)
+   ;		(org-level-6 . 1.1)
+   ;		(org-level-7 . 1.1)
+   ;		(org-level-8 . 1.1)))
+   ;  (set-face-attribute (car face) nil :font "Cantarell" :weight 'regular :height (cdr face)))
 
 #+end_src
 ** Inline image display
@@ -315,132 +319,143 @@ BEG and END default to the buffer boundaries."
 
 ** Babel
 #+begin_src emacs-lisp
-(setq org-confirm-babel-evaluate nil)
+  (setq org-confirm-babel-evaluate nil)
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '(
-   (shell . t)
-   (python . t)
-   ))
-(setq org-src-fontify-natively t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '(
+     (emacs-lisp . t)
+     (shell . t)
+     (python . t)
+     ))
+  (setq org-src-fontify-natively t)
 
-(require 'org-tempo) ; enable <s expansion for generic source code block
-(add-to-list 'org-structure-template-alist '("sh" . "src shell"))
-(add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
-(add-to-list 'org-structure-template-alist '("py" . "src python"))
-(add-to-list 'org-structure-template-alist '("gp" . "src gnuplot"))
+  (require 'org-tempo) ; enable <s expansion for generic source code block
+  (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
+  (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
+  (add-to-list 'org-structure-template-alist '("py" . "src python"))
+  (add-to-list 'org-structure-template-alist '("gp" . "src gnuplot"))
 #+end_src
 
 ** Agenda customization
 #+begin_src emacs-lisp
-                  (setq org-directory "~/org/")
-                (setq org-agenda-files
-                          '(
-                        "~/Dropbox/org/projects.org"
-                      "~/Dropbox/org/habits.org"
-                    "~/Dropbox/org/birthdays.org"
-                  "~/Dropbox/org/inbox.org"
-                "~/Dropbox/org/tickler.org"
-              "~/mnt/nas/Intenso-SpeedLine-00/org/work.org"
-                            ))
+      (setq org-directory "~/org/")
+      (setq org-agenda-files
+            '(
+              "~/Dropbox/org/projects.org"
+              "~/Dropbox/org/habits.org"
+              "~/Dropbox/org/birthdays.org"
+              "~/Dropbox/org/inbox.org"
+              "~/Dropbox/org/tickler.org"
+              ))
 
-                  (setq org-habit-show-habits-only-for-today nil)
-                  (setq org-agenda-start-on-weekday nil)
-                  (setq org-agenda-custom-commands
-                        '(
-                          ("d" "Daily agenda and High-prio projects"
-                           (
-                            (tags "PRIORITY=\"A\""
-                                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                                   (org-agenda-overriding-header "High-priority unfinished projects:")))
-                            (agenda ""     ((org-agenda-span 'day)) )
-  ;;                          (alltodo ""
-  ;;                                   ((org-agenda-skip-function '(or (air-org-skip-subtree-if-habit)
-  ;;                                                                   (air-org-skip-subtree-if-priority ?A)
-  ;;                                                                   (org-agenda-skip-if nil '(scheduled deadline))))
-  ;;                                    (org-agenda-overriding-header "ALL normal priority tasks:")))
-
-
-                            )
-                           ((org-agenda-compact-blocks t))
-                           )
-
-                                              ("w" "Next 3 days"
-                           (
-
-                            (tags "PRIORITY=\"A\""
-                                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                                   (org-agenda-overriding-header "High-priority unfinished projects:")))
-                            ( agenda ""     ((org-agenda-span 3)) )
-
-                            )
-                           )
+      (setq org-habit-show-habits-only-for-today nil)
+      (setq org-agenda-start-on-weekday nil)
+      (setq org-startup-folded t)
+      (setq org-agenda-custom-commands
+            '(
+              ("d" "Daily agenda and High-prio projects"
+               (
+                (tags "PRIORITY=\"A\""
+                      ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                       (org-agenda-overriding-header "High-priority unfinished projects:")))
+                (agenda ""     ((org-agenda-span 'day)) )
+        ;;                          (alltodo ""
+        ;;                                   ((org-agenda-skip-function '(or (air-org-skip-subtree-if-habit)
+        ;;                                                                   (air-org-skip-subtree-if-priority ?A)
+        ;;                                                                   (org-agenda-skip-if nil '(scheduled deadline))))
+        ;;                                    (org-agenda-overriding-header "ALL normal priority tasks:")))
 
 
+                )
+               ((org-agenda-compact-blocks t))
+               )
 
-                          ("n" "Next Tasks"
-                           (
-                            (todo "NEXT" ((org-agenda-overriding-header "Next Actions")))
-                            )
-                           )
+              ("w" "Next 3 days"
+               (
 
+                (tags "PRIORITY=\"A\""
+                      ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                       (org-agenda-overriding-header "High-priority unfinished projects:")))
+                ( agenda ""     ((org-agenda-span 3)) )
 
-                          ("C" "Tasks by context"
-                           (
-                            (tags "@work|@learn"
-                           ((org-agenda-overriding-header "WorkLearn")
-                            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
-                            (tags "@hobby|@relax|@sport"
-                           ((org-agenda-overriding-header "HobbyRelaxSport")
-                            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)))
-                            (tags "@coding"
-                           ((org-agenda-overriding-header "Coding")
-                            (org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
-                            ))
-                            )                           )
-
-                          )
-                        )
+                )
+               )
 
 
 
-                  (defun air-org-skip-subtree-if-priority (priority)
-                    "Skip an agenda subtree if it has a priority of PRIORITY.
-
-                  PRIORITY may be one of the characters ?A, ?B, or ?C."
-                    (let ((subtree-end (save-excursion (org-end-of-subtree t)))
-                          (pri-value (* 1000 (- org-lowest-priority priority)))
-                          (pri-current (org-get-priority (thing-at-point 'line t))))
-                      (if (= pri-value pri-current)
-                          subtree-end
-                        nil)))
-
-                  (defun air-org-skip-subtree-if-habit ()
-                    "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
-                    (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-                      (if (string= (org-entry-get nil "STYLE") "habit")
-                          subtree-end
-                        nil)))
+              ("n" "Next Tasks"
+               (
+                (todo "NEXT" ((org-agenda-overriding-header "Next Actions")))
+                )
+               )
 
 
-                  (defun my-org-agenda-skip-all-siblings-but-first ()
-                      "Skip all but the first non-done entry."
-                      (let (should-skip-entry)
-                        (unless (org-current-is-todo)
-                          (setq should-skip-entry t))
-                        (save-excursion
-                          (while (and (not should-skip-entry) (org-goto-sibling t))
-                            (when (org-current-is-todo)
-                              (setq should-skip-entry t))))
-                        (when should-skip-entry
-                          (or (outline-next-heading)
-                              (goto-char (point-max))))))
+              ("C" "Tasks by context"
+               (
+                (tags "work|learn"
+                      (
+                       (org-agenda-overriding-header "Work Learn")
+                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
+                       ;(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
+                       )
+                      )
+                (tags "hobby|relax|sport"
+                      (
+                       (org-agenda-overriding-header "Hobby Relax Sport")
+                       ;(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
+                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
+                       )
+                      )
+                (tags "coding"
+                      (
+                       (org-agenda-overriding-header "Coding")
+                       ;(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
+                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
+                       )
+                      )
+                )
+               )
+              )
+            )
 
-                (defun org-current-is-todo ()
-                    (or (string= "TODO" (org-get-todo-state)) (string= "NEXT" (org-get-todo-state)))
 
-                    )
+      (defun air-org-skip-subtree-if-priority (priority)
+        "Skip an agenda subtree if it has a priority of PRIORITY.
+
+                        PRIORITY may be one of the characters ?A, ?B, or ?C."
+        (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+              (pri-value (* 1000 (- org-lowest-priority priority)))
+              (pri-current (org-get-priority (thing-at-point 'line t))))
+          (if (= pri-value pri-current)
+              subtree-end
+            nil)))
+
+      (defun air-org-skip-subtree-if-habit ()
+        "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
+        (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+          (if (string= (org-entry-get nil "STYLE") "habit")
+              subtree-end
+            nil)))
+
+
+      (defun my-org-agenda-skip-all-siblings-but-first ()
+        "Skip all but the first non-done entry."
+        (let (should-skip-entry)
+          (unless (org-current-is-todo)
+            (setq should-skip-entry t))
+          (save-excursion
+            (while (and (not should-skip-entry) (org-goto-sibling t))
+              (when (org-current-is-todo)
+                (setq should-skip-entry t))))
+          (when should-skip-entry
+            (or (outline-next-heading)
+                (goto-char (point-max))))))
+
+      (defun org-current-is-todo ()
+        (or (string= "TODO" (org-get-todo-state)) (string= "NEXT" (org-get-todo-state)))
+
+        )
 
 #+end_src
 
@@ -493,7 +508,6 @@ BEG and END default to the buffer boundaries."
 )
 #+end_src
 
-
 * Tex settings
 #+begin_src emacs-lisp
 ;; compile tex documents to pdf
@@ -504,7 +518,6 @@ BEG and END default to the buffer boundaries."
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
 
 #+end_src
-
 
 * Hooks
 #+begin_src emacs-lisp
@@ -639,5 +652,21 @@ BEG and END default to the buffer boundaries."
 (add-hook 'go-mode-hook #'lsp-deferred)
 (add-hook 'go-mode-hook #'yas-minor-mode)
 
+
+#+end_src
+
+* load themes
+- dark themes
+#+begin_src emacs-lisp
+  (load-theme 'zenburn t)
+  ;(load-theme 'manoj-dark    t )
+  ;(load-theme 'modus-vivendi t )
+  ;(load-theme 'sunburn       t )
+  ;(load-theme 'tsdh-dark     t )
+#+end_src
+- light themes
+#+begin_src emacs-lisp
+  ;(load-theme 'modus-operandi t )
+  ;(load-theme 'tsdh-light    t )
 
 #+end_src

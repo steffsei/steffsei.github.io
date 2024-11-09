@@ -1,0 +1,17 @@
+:PROPERTIES:
+:ID:       d366f2fe-cb33-4940-9f34-b12abec3e47b
+:END:
+#+title: Photography
+
+* [[id:004e9bf7-ac19-4ece-b98e-3780f4f7554e][Astrophotography]]
+* Linux tools
+
+| Tool                   | Purpose                                                                       |
+|------------------------+-------------------------------------------------------------------------------|
+| gimp-nufraw            | convert nikon raw file to jpg / batch processing available                    |
+| Hugin Panorama Creator | create panorama image                                                         |
+| exiftool               | extract metadata                                                              |
+|                        | for i in `ls -d *NEF`;do echo $i  `exiftool $i grep -m 1 "Focal Length"`;done |
+#+begin_src
+nufraw-batch --wb=camera --exposure=0.0 --out-type=jpeg --compression=95 --size=2048
+#+end_src

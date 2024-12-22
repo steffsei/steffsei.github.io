@@ -3,7 +3,7 @@
 :END:
 #+title: Photography
 
-* [[id:004e9bf7-ac19-4ece-b98e-3780f4f7554e][Astrophotography]]
+* [[./20221210100053-astrophotography.org][Astrophotography]]
 * Linux tools
 
 | Tool                   | Purpose                                                                       |

@@ -19,7 +19,7 @@ https://www.galactic-hunter.com/post/spring-the-15-best-astrophotography-targets
 - Andromeda (M31)
 - Triangulum (M33)
 
-*[[id:3354ff50-b6a7-4662-bed7-367ec1b7b489][Astrophotography]]* Newtonian collimation
+** Newtonian collimation
 *** Alignment with webcam
 
 - Use collimation cap with raspberry pi webcam

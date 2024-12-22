@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Photography</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">Photography</h1>
+<p>
+:ID:       d366f2fe-cb33-4940-9f34-b12abec3e47b
+</p>
+
+<div id="outline-container-org7c4df06" class="outline-2">
+<h2 id="org7c4df06"><a href="./20221210100053-astrophotography.html">Astrophotography</a></h2>
+</div>
+<div id="outline-container-org31df5f0" class="outline-2">
+<h2 id="org31df5f0">Linux tools</h2>
+<div class="outline-text-2" id="text-org31df5f0">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Tool</th>
+<th scope="col" class="org-left">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">gimp-nufraw</td>
+<td class="org-left">convert nikon raw file to jpg / batch processing available</td>
+</tr>
+
+<tr>
+<td class="org-left">Hugin Panorama Creator</td>
+<td class="org-left">create panorama image</td>
+</tr>
+
+<tr>
+<td class="org-left">exiftool</td>
+<td class="org-left">extract metadata</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">for i in `ls -d *NEF`;do echo $i  `exiftool $i grep -m 1 "Focal Length"`;done</td>
+</tr>
+</tbody>
+</table>
+<pre class="example">
+nufraw-batch --wb=camera --exposure=0.0 --out-type=jpeg --compression=95 --size=2048
+</pre>
+</div>
+</div>
+</div>
+</body>
+</html>

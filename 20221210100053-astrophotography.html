@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Astrophotography</title>
+<meta name="generator" content="Org mode" />
+<link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
+</head>
+<body>
+<div id="content">
+<h1 class="title">Astrophotography</h1>
+<p>
+:ID:       004e9bf7-ac19-4ece-b98e-3780f4f7554e
+</p>
+<div id="outline-container-org378a5a8" class="outline-2">
+<h2 id="org378a5a8">Astrophotography</h2>
+<div class="outline-text-2" id="text-org378a5a8">
+</div>
+<div id="outline-container-org3354b15" class="outline-3">
+<h3 id="org3354b15">Targets</h3>
+<div class="outline-text-3" id="text-org3354b15">
+</div>
+<div id="outline-container-orgaf6ac2d" class="outline-4">
+<h4 id="orgaf6ac2d">Solar system</h4>
+<div class="outline-text-4" id="text-orgaf6ac2d">
+<ul class="org-ul">
+<li>Merkur</li>
+<li>Moon (Henkel)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgbac99e4" class="outline-4">
+<h4 id="orgbac99e4">Spring targets</h4>
+<div class="outline-text-4" id="text-orgbac99e4">
+<p>
+<a href="https://www.galactic-hunter.com/post/spring-the-15-best-astrophotography-targets">https://www.galactic-hunter.com/post/spring-the-15-best-astrophotography-targets</a>
+</p>
+<ul class="org-ul">
+<li>Markarian's chain</li>
+<li>Bode's Galaxy M81 and Cigar Galaxy M82</li>
+<li>Leo triplet M65, M66, NGC 3628</li>
+<li>North America Nebula</li>
+<li>Beehive cluster</li>
+<li>Jabbah Blue horsehead nebula (faint blue cloud)</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org6e69be0" class="outline-4">
+<h4 id="org6e69be0">Autumn targets</h4>
+<div class="outline-text-4" id="text-org6e69be0">
+<ul class="org-ul">
+<li>Andromeda (M31)</li>
+<li>Triangulum (M33)</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3c882c5" class="outline-3">
+<h3 id="org3c882c5">Newtonian collimation</h3>
+<div class="outline-text-3" id="text-org3c882c5">
+</div>
+<div id="outline-container-org28b390f" class="outline-4">
+<h4 id="org28b390f">Alignment with webcam</h4>
+<div class="outline-text-4" id="text-org28b390f">
+<ul class="org-ul">
+<li>Use collimation cap with raspberry pi webcam</li>
+</ul>
+</div>
+
+<ul class="org-ul">
+<li><a id="orgb6173f0"></a>Setup<br />
+<div class="outline-text-5" id="text-orgb6173f0">
+<ul class="org-ul">
+<li><p>
+Shell 1 on rpi : Take pictures in infinite loop
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="font-weight: bold;">for</span> i<span style="font-weight: bold;"> in</span> <span style="font-weight: bold;">`seq 1000`</span>;<span style="font-weight: bold;">do</span> raspistill -v -o test.jpg ;<span style="font-weight: bold;">done</span>
+</pre>
+</div></li>
+<li><p>
+Shell 2 via sshfs : Prepare crosshair overlay
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">python overlay.py 400
+</pre>
+</div>
+<div class="org-src-container">
+<pre class="src src-python"><span style="font-weight: bold; font-style: italic;">#</span><span style="font-weight: bold; font-style: italic;">!/usr/bin/python</span>
+<span style="font-weight: bold;">import</span> subprocess
+<span style="font-weight: bold;">import</span> argparse
+
+<span style="font-weight: bold; font-style: italic;">parser</span> = argparse.ArgumentParser(description=<span style="font-style: italic;">'Process some integers.'</span>)
+parser.add_argument(<span style="font-style: italic;">'radius'</span>, <span style="font-weight: bold;">type</span>=<span style="font-weight: bold;">int</span>, <span style="font-weight: bold;">help</span>=<span style="font-style: italic;">'radius of circle'</span>)
+
+<span style="font-weight: bold; font-style: italic;">args</span> = parser.parse_args()
+
+<span style="font-weight: bold; font-style: italic;">r</span>=args.radius
+<span style="font-weight: bold; font-style: italic;">origin</span>=(1000,1000)
+
+<span style="font-weight: bold; font-style: italic;">line0</span>=[]
+line0.append((origin[0]-r,origin[1]))
+line0.append((origin[0]+r,origin[1]))
+
+<span style="font-weight: bold; font-style: italic;">line1</span>=[]
+line1.append((origin[0],origin[1]-r))
+line1.append((origin[0],origin[1]+r))
+
+<span style="font-weight: bold; font-style: italic;">command</span>=f<span style="font-style: italic;">"magick convert -size 2592x1944 canvas:none -fill red -draw 'line {line0[0][0]},{line0[0][1]} {line0[1][0]},{line0[1][1]}' -fill red -draw 'line {line1[0][0]},{line1[0][1]} {line1[1][0]},{line1[1][1]}'  cross.png"</span>
+subprocess.run(command, shell=<span style="font-weight: bold; text-decoration: underline;">True</span>, check=<span style="font-weight: bold; text-decoration: underline;">True</span>)
+</pre>
+</div></li>
+<li><p>
+Shell 3 via sshfs : Put cross.png over raw.jpg in infinite loop
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="font-weight: bold;">for</span> i<span style="font-weight: bold;"> in</span> <span style="font-weight: bold;">`seq 1000`</span>;<span style="font-weight: bold;">do</span> sleep 1s; convert raw.jpg cross.png -geometry +410-135 -composite combined.jpg;<span style="font-weight: bold;">done</span>
+</pre>
+</div></li>
+<li><p>
+Shell 4 via sshfs : Display image in continously refresh mode
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">feh --reload 0.5 combined.png
+</pre>
+</div></li>
+</ul>
+</div>
+</li>
+
+<li><a id="org8041177"></a>Procedure<br />
+<div class="outline-text-5" id="text-org8041177">
+<p>
+<a href="https://www.youtube.com/watch?v=8ROvNH5uwDo">https://www.youtube.com/watch?v=8ROvNH5uwDo</a>
+(points out problem with secondary alignment with laser only)
+</p>
+<ol class="org-ol">
+<li>Align secondary (colored papers opposite to eyepiece and in front of primary mirror)
+<ol class="org-ol">
+<li>Make secondary mirror circular in shape in center of image (Rule out rotational error)</li>
+<li>Adjust (tilt/(rotation)) to center mark of primary in center of cross hair</li>
+</ol></li>
+<li>Align primary (remove paper)
+<ul class="org-ul">
+<li>Get reflection of center of secondary into center of image</li>
+</ul></li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org935bcdc" class="outline-3">
+<h3 id="org935bcdc">Raspberry Phd guiding</h3>
+<div class="outline-text-3" id="text-org935bcdc">
+<p>
+<a href="https://github.com/OpenPHDGuiding/phd2/wiki/BuildingPHD2OnLinux">https://github.com/OpenPHDGuiding/phd2/wiki/BuildingPHD2OnLinux</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbb3427a" class="outline-3">
+<h3 id="orgbb3427a">Frame types</h3>
+<div class="outline-text-3" id="text-orgbb3427a">
+</div>
+<div id="outline-container-orgd7af61a" class="outline-4">
+<h4 id="orgd7af61a">Light frames</h4>
+</div>
+<div id="outline-container-org261c8cb" class="outline-4">
+<h4 id="org261c8cb">Dark frames</h4>
+<div class="outline-text-4" id="text-org261c8cb">
+<ul class="org-ul">
+<li>same as light frames with lens cap on</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orge5cb6b1" class="outline-4">
+<h4 id="orge5cb6b1">Flat frames</h4>
+<div class="outline-text-4" id="text-orge5cb6b1">
+<ul class="org-ul">
+<li>white t-shirt method</li>
+</ul>
+<p>
+<a href="https://photographingspace.com/how-to-create-dslr-and-ccd-flat-frames-for-astrophotography/">https://photographingspace.com/how-to-create-dslr-and-ccd-flat-frames-for-astrophotography/</a>
+</p>
+</div>
+</div>
+<div id="outline-container-orgee3bf84" class="outline-4">
+<h4 id="orgee3bf84">Bias frames</h4>
+<div class="outline-text-4" id="text-orgee3bf84">
+<p>
+frames with same iso setting; fastest shutter speed; lens cap on
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org686819b" class="outline-3">
+<h3 id="org686819b">HEQ5 Images through Newtonian</h3>
+<div class="outline-text-3" id="text-org686819b">
+<ol class="org-ol">
+<li>Alignment of Telescope
+<ul class="org-ul">
+<li>Level mount</li>
+<li>align to polar star (polar finder app)</li>
+<li>Make 2 or 3 star alignment</li>
+</ul></li>
+<li>Focus camera
+<ul class="org-ul">
+<li>Find target in eyepiece (or visible star in proximity)</li>
+<li>Exchange eyepiece with camera and focus (liveview or take test image)</li>
+</ul></li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org34dd587" class="outline-3">
+<h3 id="org34dd587">OTAs</h3>
+<div class="outline-text-3" id="text-org34dd587">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-right">Focal length / mm</th>
+<th scope="col" class="org-right">Aperture / mm</th>
+<th scope="col" class="org-right">Focal ratio / f/</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Celestron Astromaster 130</td>
+<td class="org-right">650</td>
+<td class="org-right">130</td>
+<td class="org-right">5</td>
+</tr>
+
+<tr>
+<td class="org-left">William Optics Zenithstar 61</td>
+<td class="org-right">360</td>
+<td class="org-right">61</td>
+<td class="org-right">5.9016393</td>
+</tr>
+
+<tr>
+<td class="org-left">Nikon 55-200mm (DX)</td>
+<td class="org-right">200</td>
+<td class="org-right">33.898305</td>
+<td class="org-right">5.9</td>
+</tr>
+
+<tr>
+<td class="org-left">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+<td class="org-right">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-orgaf94046" class="outline-4">
+<h4 id="orgaf94046">Field Flattener WO Zenithstar 61</h4>
+<div class="outline-text-4" id="text-orgaf94046">
+<ul class="org-ul">
+<li><a href="https://williamoptics.com/new-adjustable-flat61-for-z61">https://williamoptics.com/new-adjustable-flat61-for-z61</a></li>
+<li><a href="https://www.youtube.com/watch?v=OnZUeirMpmY">https://www.youtube.com/watch?v=OnZUeirMpmY</a></li>
+<li>Distance between image plane and t-ring standardized to 55mm</li>
+<li>suggested first attempt for field flattener: 12.9mm</li>
+<li>adjustment:
+<ul class="org-ul">
+<li>trial and error at the end, you just have to slightly move back and forth a few mm and test it
+out, look on the corners for stretch stars, if the stretch goes to the center of the image it
+means the flattener is too close, if the stretch of the star are “perpendicular” to the center
+of the image, the flattener went too far, I hope this helps!</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-org3f5311c" class="outline-3">
+<h3 id="org3f5311c">Image Postprocessing:</h3>
+<div class="outline-text-3" id="text-org3f5311c">
+<p>
+<a href="https://www.youtube.com/watch?v=AKKlzbgQStE">https://www.youtube.com/watch?v=AKKlzbgQStE</a>
+</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

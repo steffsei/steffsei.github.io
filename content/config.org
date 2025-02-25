@@ -109,20 +109,15 @@
 
   (setq initial-major-mode 'org-mode)
   (setq default-major-mode 'org-mode)
+  (setq org-M-RET-may-split-line '((default . nil)))
+  (setq org-insert-heading-respect-content t)
+  ;(setq org-log-into-drawer t)
+  ; (setq org-log-done 'time)
+  ;; Org manual. Evaluate: (info "(org) Tracking TODO state changes")
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "WAIT" "INPROGRESS(s!)" "|" "DONE(d!)" "CANCELED(c)")))
-  (setq org-log-into-drawer t)
+        '((sequence "TODO(t)" "NEXT(n)" "WAIT" "INPROGRESS(s)" "|" "DONE(d!)" "CANCELED(c)")))
   (eval-after-load "org"
     '(progn
-       (if (assoc "\\.ods\\'" org-file-apps)
-           (setcdr (assoc "\\.ods\\'" org-file-apps) "loffice %s")
-         (add-to-list 'org-file-apps '("\\.ods\\'" . "loffice %s") t))
-       (if (assoc "\\.png\\'" org-file-apps)
-           (setcdr (assoc "\\.png\\'" org-file-apps) "ristretto %s")
-         (add-to-list 'org-file-apps '("\\.png\\'" . "ristretto %s") t))
-       (if (assoc "\\.gif\\'" org-file-apps)
-           (setcdr (assoc "\\.gif\\'" org-file-apps) "ristretto %s")
-         (add-to-list 'org-file-apps '("\\.gif\\'" . "ristretto %s") t))
        ;; Change .pdf association directly within the alist
        (setcdr (assoc "\\.pdf\\'" org-file-apps) "evince %s")))
   (add-hook 'org-mode-hook
@@ -131,16 +126,21 @@
             )
   (setq org-tag-alist
         '(;;Places
-          ("@home" . ?H)
-          ("@work" . ?W)
-          ("@sport" . ?S)
+          ("@homeMunich" . ?H)
+          ("@homeUf" . ?U)
+          ("@workAra" . ?A)
+          ("@workUfo" . ?W)
 
-          ;;Activities
-          ("@relax" . ?r)
-          ("@communication" . ?c)
-          ("@planning" . ?p)
-          ("@programming" . ?P)
-          ("@creative" . ?C)
+          ;;Contexts
+          ("work" . ?w)
+          ("techLearn" . ?t)
+          ;
+          ("relax" . ?r)
+          ("creative" . ?c)
+          ("sport" . ?s)
+          ("hobby" . ?h)
+          ;
+          ("planning" . ?p)
           ))
 
 
@@ -339,122 +339,67 @@ BEG and END default to the buffer boundaries."
 
 ** Agenda customization
 #+begin_src emacs-lisp
-      (setq org-directory "~/org/")
-      (setq org-agenda-files
-            '(
-              "~/Dropbox/org/projects.org"
-              "~/Dropbox/org/habits.org"
-              "~/Dropbox/org/birthdays.org"
-              "~/Dropbox/org/inbox.org"
-              "~/Dropbox/org/tickler.org"
-              ))
+  (setq org-directory "~/org/")
+  (setq org-agenda-files
+        '(
+          "~/Dropbox/org/projects.org"
+          "~/Dropbox/org/habits.org"
+          "~/Dropbox/org/birthdays.org"
+          "~/Dropbox/org/inbox.org"
+          "~/Dropbox/org/tickler.org"
+          ))
 
-      (setq org-habit-show-habits-only-for-today nil)
-      (setq org-agenda-start-on-weekday nil)
-      (setq org-startup-folded t)
-      (setq org-agenda-custom-commands
-            '(
-              ("d" "Daily agenda and High-prio projects"
-               (
-                (tags "PRIORITY=\"A\""
-                      ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                       (org-agenda-overriding-header "High-priority unfinished projects:")))
-                (agenda ""     ((org-agenda-span 'day)) )
-        ;;                          (alltodo ""
-        ;;                                   ((org-agenda-skip-function '(or (air-org-skip-subtree-if-habit)
-        ;;                                                                   (air-org-skip-subtree-if-priority ?A)
-        ;;                                                                   (org-agenda-skip-if nil '(scheduled deadline))))
-        ;;                                    (org-agenda-overriding-header "ALL normal priority tasks:")))
-
-
-                )
-               ((org-agenda-compact-blocks t))
-               )
-
-              ("w" "Next 3 days"
-               (
-
-                (tags "PRIORITY=\"A\""
-                      ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                       (org-agenda-overriding-header "High-priority unfinished projects:")))
-                ( agenda ""     ((org-agenda-span 3)) )
-
-                )
-               )
-
-
-
-              ("n" "Next Tasks"
-               (
-                (todo "NEXT" ((org-agenda-overriding-header "Next Actions")))
-                )
-               )
-
-
-              ("C" "Tasks by context"
-               (
-                (tags "work|learn"
-                      (
-                       (org-agenda-overriding-header "Work Learn")
-                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
-                       ;(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
-                       )
-                      )
-                (tags "hobby|relax|sport"
-                      (
-                       (org-agenda-overriding-header "Hobby Relax Sport")
-                       ;(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
-                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
-                       )
-                      )
-                (tags "coding"
-                      (
-                       (org-agenda-overriding-header "Coding")
-                       ;(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)
-                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
-                       )
-                      )
-                )
-               )
-              )
+  (setq org-habit-show-habits-only-for-today nil)
+  (setq org-agenda-start-on-weekday nil)
+  (setq org-startup-folded t)
+  (setq org-agenda-custom-commands
+        '(
+          ("d" "Daily agenda"
+           (
+            (agenda ""     ((org-agenda-span 'day)))
             )
+           ((org-agenda-compact-blocks t))
+           )
+
+          ("w" "Next 3 days"
+           (
+            ( agenda ""     ((org-agenda-span 3)) )
+
+            )
+           )
 
 
-      (defun air-org-skip-subtree-if-priority (priority)
-        "Skip an agenda subtree if it has a priority of PRIORITY.
 
-                        PRIORITY may be one of the characters ?A, ?B, or ?C."
-        (let ((subtree-end (save-excursion (org-end-of-subtree t)))
-              (pri-value (* 1000 (- org-lowest-priority priority)))
-              (pri-current (org-get-priority (thing-at-point 'line t))))
-          (if (= pri-value pri-current)
-              subtree-end
-            nil)))
-
-      (defun air-org-skip-subtree-if-habit ()
-        "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
-        (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-          (if (string= (org-entry-get nil "STYLE") "habit")
-              subtree-end
-            nil)))
+          ("n" "Next Tasks"
+           (
+            (todo "NEXT" ((org-agenda-overriding-header "Next Actions")))
+            )
+           )
 
 
-      (defun my-org-agenda-skip-all-siblings-but-first ()
-        "Skip all but the first non-done entry."
-        (let (should-skip-entry)
-          (unless (org-current-is-todo)
-            (setq should-skip-entry t))
-          (save-excursion
-            (while (and (not should-skip-entry) (org-goto-sibling t))
-              (when (org-current-is-todo)
-                (setq should-skip-entry t))))
-          (when should-skip-entry
-            (or (outline-next-heading)
-                (goto-char (point-max))))))
-
-      (defun org-current-is-todo ()
-        (or (string= "TODO" (org-get-todo-state)) (string= "NEXT" (org-get-todo-state)))
-
+          ("C" "Tasks by context"
+           (
+            (tags "work|techLearn"
+                  (
+                   (org-agenda-overriding-header "work|techLearn")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '("TODO" "NEXT" "WAIT" "INPROGRESS") ))
+                   )
+                  )
+            (tags "relax|creative|sport|hobby"
+                  (
+                   (org-agenda-overriding-header "relax|creative|sport|hobby")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '("TODO" "NEXT" "WAIT" "INPROGRESS") ))
+                   )
+                  )
+            (tags "planning"
+                  (
+                   (org-agenda-overriding-header "planning")
+                   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '("TODO" "NEXT" "WAIT" "INPROGRESS") ))
+                   )
+                  )
+            )
+           )
+          )
         )
 
 #+end_src
@@ -489,6 +434,13 @@ BEG and END default to the buffer boundaries."
  (setq org-habit-graph-column 60)
 #+end_src
 
+
+
+** Calendar export
+#+begin_src emacs-lisp
+  (setq org-icalendar-include-todo t)
+  (setq org-icalendar-force-alarm t)
+#+end_src
 * Embark
 
 ** General setup

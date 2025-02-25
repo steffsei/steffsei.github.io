@@ -2,13 +2,7 @@
 
 * Overview
 
-This is an *example* of a _website_ written with [[https://orgmode.org][Org Mode]]!
-
 Here is a link to my [[./config.org][Emacs configuration]].
-
-
-[[./20221210095540-photography.org]]
-
 
 * Links
 - [[https://systemcrafters.net][System Crafters Official Site]]

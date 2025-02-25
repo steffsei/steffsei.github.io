@@ -6,19 +6,14 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
-<meta name="generator" content="Org mode" />
+<meta name="generator" content="Org Mode" />
 <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css" />
 </head>
 <body>
-<div id="content">
-<p>
-:header-args: emacs-lisp :tangle ./init.el :mkdirp yes
-:+TITLE: Emacs Configuration
-</p>
-
-<div id="outline-container-org59925fd" class="outline-2">
-<h2 id="org59925fd">General hint</h2>
-<div class="outline-text-2" id="text-org59925fd">
+<div id="content" class="content">
+<div id="outline-container-org417a0e2" class="outline-2">
+<h2 id="org417a0e2">General hint</h2>
+<div class="outline-text-2" id="text-org417a0e2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;;; </span><span style="font-weight: bold; font-style: italic;">; Insert the following line in your local .emacs file:</span>
 <span style="font-weight: bold; font-style: italic;">;;;</span>
@@ -29,9 +24,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org58d343a" class="outline-2">
-<h2 id="org58d343a">Package System Setup</h2>
-<div class="outline-text-2" id="text-org58d343a">
+<div id="outline-container-org6c7299b" class="outline-2">
+<h2 id="org6c7299b">Package System Setup</h2>
+<div class="outline-text-2" id="text-org6c7299b">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-to-list 'load-path <span style="font-style: italic;">"~/Dropbox/init/emacs/emacs.d/lisp/"</span>)
 
@@ -45,9 +40,9 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgf9da9ab" class="outline-2">
-<h2 id="orgf9da9ab">Debug startup time</h2>
-<div class="outline-text-2" id="text-orgf9da9ab">
+<div id="outline-container-org72cb701" class="outline-2">
+<h2 id="org72cb701">Debug startup time</h2>
+<div class="outline-text-2" id="text-org72cb701">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">  (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">display-startup-time</span> ()
     ( message <span style="font-style: italic;">" Emacs loaded in %s with %d garbage collections."</span>
@@ -62,11 +57,11 @@
 </div>
 </div>
 </div>
-<div id="outline-container-orgfb7d6dd" class="outline-2">
-<h2 id="orgfb7d6dd">Flyspell mode</h2>
-<div class="outline-text-2" id="text-orgfb7d6dd">
+<div id="outline-container-org9b0e683" class="outline-2">
+<h2 id="org9b0e683">Flyspell mode</h2>
+<div class="outline-text-2" id="text-org9b0e683">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(use-package flyspell
+<pre class="src src-emacs-lisp">(<span style="font-weight: bold;">use-package</span> flyspell
   <span style="font-weight: bold;">:custom</span>
   (ispell-program-name <span style="font-style: italic;">"aspell"</span>)
   <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Default dictionary. To change do M-x ispell-change-dictionary RET.</span>
@@ -84,18 +79,18 @@
 </div>
 </div>
 </div>
-<div id="outline-container-org475bfe9" class="outline-2">
-<h2 id="org475bfe9">Completion</h2>
-<div class="outline-text-2" id="text-org475bfe9">
+<div id="outline-container-org9e95ad2" class="outline-2">
+<h2 id="org9e95ad2">Completion</h2>
+<div class="outline-text-2" id="text-org9e95ad2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> completion-styles '(basic initials partial-completion substring flex))
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgc028ac0" class="outline-2">
-<h2 id="orgc028ac0">Basic UI Configuration</h2>
-<div class="outline-text-2" id="text-orgc028ac0">
+<div id="outline-container-orgdc4ad24" class="outline-2">
+<h2 id="orgdc4ad24">Basic UI Configuration</h2>
+<div class="outline-text-2" id="text-orgdc4ad24">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(global-hl-line-mode 1)                   <span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">highlight line</span>
 (set-face-background 'hl-line <span style="font-style: italic;">"#999999"</span>)
@@ -118,7 +113,7 @@ scroll-conservatively 10000)
 
 <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">visual-fill-column</span>
 (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">visual-fill-column</span>)
-(use-package visual-fill-column)
+(<span style="font-weight: bold;">use-package</span> visual-fill-column)
 (<span style="font-weight: bold;">setq-default</span> fill-column 100)
 
 <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">line wrapping</span>
@@ -130,23 +125,23 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-orgab32512" class="outline-2">
-<h2 id="orgab32512">SimpleHttpd</h2>
-<div class="outline-text-2" id="text-orgab32512">
+<div id="outline-container-orgb7175fd" class="outline-2">
+<h2 id="orgb7175fd">SimpleHttpd</h2>
+<div class="outline-text-2" id="text-orgb7175fd">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(use-package simple-httpd
+<pre class="src src-emacs-lisp">(<span style="font-weight: bold;">use-package</span> simple-httpd
 <span style="font-weight: bold;">:ensure</span> t)
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcd7fc23" class="outline-2">
-<h2 id="orgcd7fc23">Org mode settings</h2>
-<div class="outline-text-2" id="text-orgcd7fc23">
+<div id="outline-container-org3e14ef0" class="outline-2">
+<h2 id="org3e14ef0">Org mode settings</h2>
+<div class="outline-text-2" id="text-org3e14ef0">
 </div>
-<div id="outline-container-org372fd01" class="outline-3">
-<h3 id="org372fd01">Basic config</h3>
-<div class="outline-text-3" id="text-org372fd01">
+<div id="outline-container-org2f893a5" class="outline-3">
+<h3 id="org2f893a5">Basic config</h3>
+<div class="outline-text-3" id="text-org2f893a5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">org-mode-setup</span> ()
   (org-indent-mode)
@@ -155,26 +150,21 @@ scroll-conservatively 10000)
   <span style="font-weight: bold; font-style: italic;">;;</span><span style="font-weight: bold; font-style: italic;">(visual-fill-column-mode) ;; problems in combination with org-indent-mode</span>
   )
 
-(use-package org <span style="font-weight: bold;">:pin</span> gnu )
-(use-package org-mode
+(<span style="font-weight: bold;">use-package</span> org <span style="font-weight: bold;">:pin</span> gnu )
+(<span style="font-weight: bold;">use-package</span> org-mode
   <span style="font-weight: bold;">:hook</span> (org-mode . org-mode-setup))
 
 (<span style="font-weight: bold;">setq</span> initial-major-mode 'org-mode)
 (<span style="font-weight: bold;">setq</span> default-major-mode 'org-mode)
+(<span style="font-weight: bold;">setq</span> org-M-RET-may-split-line '((default . nil)))
+(<span style="font-weight: bold;">setq</span> org-insert-heading-respect-content t)
+<span style="font-weight: bold; font-style: italic;">;</span><span style="font-weight: bold; font-style: italic;">(setq org-log-into-drawer t)</span>
+<span style="font-weight: bold; font-style: italic;">; </span><span style="font-weight: bold; font-style: italic;">(setq org-log-done 'time)</span>
+<span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Org manual. Evaluate: (info "(org) Tracking TODO state changes")</span>
 (<span style="font-weight: bold;">setq</span> org-todo-keywords
-      '((sequence <span style="font-style: italic;">"TODO(t)"</span> <span style="font-style: italic;">"NEXT(n)"</span> <span style="font-style: italic;">"WAIT"</span> <span style="font-style: italic;">"INPROGRESS(s!)"</span> <span style="font-style: italic;">"|"</span> <span style="font-style: italic;">"DONE(d!)"</span> <span style="font-style: italic;">"CANCELED(c)"</span>)))
-(<span style="font-weight: bold;">setq</span> org-log-into-drawer t)
+      '((sequence <span style="font-style: italic;">"TODO(t)"</span> <span style="font-style: italic;">"NEXT(n)"</span> <span style="font-style: italic;">"WAIT"</span> <span style="font-style: italic;">"INPROGRESS(s)"</span> <span style="font-style: italic;">"|"</span> <span style="font-style: italic;">"DONE(d!)"</span> <span style="font-style: italic;">"CANCELED(c)"</span>)))
 (eval-after-load <span style="font-style: italic;">"org"</span>
-  '(<span style="font-weight: bold;">progn</span>
-     (<span style="font-weight: bold;">if</span> (assoc <span style="font-style: italic;">"\\.ods\\'"</span> org-file-apps)
-         (setcdr (assoc <span style="font-style: italic;">"\\.ods\\'"</span> org-file-apps) <span style="font-style: italic;">"loffice %s"</span>)
-       (add-to-list 'org-file-apps '(<span style="font-style: italic;">"\\.ods\\'"</span> . <span style="font-style: italic;">"loffice %s"</span>) t))
-     (<span style="font-weight: bold;">if</span> (assoc <span style="font-style: italic;">"\\.png\\'"</span> org-file-apps)
-         (setcdr (assoc <span style="font-style: italic;">"\\.png\\'"</span> org-file-apps) <span style="font-style: italic;">"ristretto %s"</span>)
-       (add-to-list 'org-file-apps '(<span style="font-style: italic;">"\\.png\\'"</span> . <span style="font-style: italic;">"ristretto %s"</span>) t))
-     (<span style="font-weight: bold;">if</span> (assoc <span style="font-style: italic;">"\\.gif\\'"</span> org-file-apps)
-         (setcdr (assoc <span style="font-style: italic;">"\\.gif\\'"</span> org-file-apps) <span style="font-style: italic;">"ristretto %s"</span>)
-       (add-to-list 'org-file-apps '(<span style="font-style: italic;">"\\.gif\\'"</span> . <span style="font-style: italic;">"ristretto %s"</span>) t))
+  '(progn
      <span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Change .pdf association directly within the alist</span>
      (setcdr (assoc <span style="font-style: italic;">"\\.pdf\\'"</span> org-file-apps) <span style="font-style: italic;">"evince %s"</span>)))
 (add-hook 'org-mode-hook
@@ -183,16 +173,21 @@ scroll-conservatively 10000)
           )
 (<span style="font-weight: bold;">setq</span> org-tag-alist
       '(<span style="font-weight: bold; font-style: italic;">;;</span><span style="font-weight: bold; font-style: italic;">Places</span>
-        (<span style="font-style: italic;">"@home"</span> . ?H)
-        (<span style="font-style: italic;">"@work"</span> . ?W)
-        (<span style="font-style: italic;">"@sport"</span> . ?S)
+        (<span style="font-style: italic;">"@homeMunich"</span> . ?H)
+        (<span style="font-style: italic;">"@homeUf"</span> . ?U)
+        (<span style="font-style: italic;">"@workAra"</span> . ?A)
+        (<span style="font-style: italic;">"@workUfo"</span> . ?W)
 
-        <span style="font-weight: bold; font-style: italic;">;;</span><span style="font-weight: bold; font-style: italic;">Activities</span>
-        (<span style="font-style: italic;">"@relax"</span> . ?r)
-        (<span style="font-style: italic;">"@communication"</span> . ?c)
-        (<span style="font-style: italic;">"@planning"</span> . ?p)
-        (<span style="font-style: italic;">"@programming"</span> . ?P)
-        (<span style="font-style: italic;">"@creative"</span> . ?C)
+        <span style="font-weight: bold; font-style: italic;">;;</span><span style="font-weight: bold; font-style: italic;">Contexts</span>
+        (<span style="font-style: italic;">"work"</span> . ?w)
+        (<span style="font-style: italic;">"techLearn"</span> . ?t)
+        <span style="font-weight: bold; font-style: italic;">;</span>
+        (<span style="font-style: italic;">"relax"</span> . ?r)
+        (<span style="font-style: italic;">"creative"</span> . ?c)
+        (<span style="font-style: italic;">"sport"</span> . ?s)
+        (<span style="font-style: italic;">"hobby"</span> . ?h)
+        <span style="font-weight: bold; font-style: italic;">;</span>
+        (<span style="font-style: italic;">"planning"</span> . ?p)
         ))
 
 
@@ -200,11 +195,11 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-org617ccfb" class="outline-3">
-<h3 id="org617ccfb">Org-roam</h3>
-<div class="outline-text-3" id="text-org617ccfb">
+<div id="outline-container-orge81acda" class="outline-3">
+<h3 id="orge81acda">Org-roam</h3>
+<div class="outline-text-3" id="text-orge81acda">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">    (use-package org-roam
+<pre class="src src-emacs-lisp">    (<span style="font-weight: bold;">use-package</span> org-roam
       <span style="font-weight: bold;">:ensure</span> t
       <span style="font-weight: bold;">:init</span>
       (<span style="font-weight: bold;">setq</span> org-roam-v2-ack t)
@@ -229,7 +224,7 @@ scroll-conservatively 10000)
   (org-roam-db-autosync-mode)
       (org-roam-setup))
 
-(use-package org-roam-ui
+(<span style="font-weight: bold;">use-package</span> org-roam-ui
     <span style="font-weight: bold;">:after</span> org-roam
 <span style="font-weight: bold; font-style: italic;">;;         </span><span style="font-weight: bold; font-style: italic;">normally we'd recommend hooking orui after org-roam, but since org-roam does not have</span>
 <span style="font-weight: bold; font-style: italic;">;;         </span><span style="font-weight: bold; font-style: italic;">a hookable mode anymore, you're advised to pick something yourself</span>
@@ -245,9 +240,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org60ae2d4" class="outline-3">
-<h3 id="org60ae2d4">Pomodoro</h3>
-<div class="outline-text-3" id="text-org60ae2d4">
+<div id="outline-container-org7c6e285" class="outline-3">
+<h3 id="org7c6e285">Pomodoro</h3>
+<div class="outline-text-3" id="text-org7c6e285">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> org-clock-sound <span style="font-style: italic;">"~/Dropbox/audio/oriental_gong.wav"</span>)
 </pre>
@@ -255,9 +250,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-orge7e8d9a" class="outline-3">
-<h3 id="orge7e8d9a">Timestamp</h3>
-<div class="outline-text-3" id="text-orge7e8d9a">
+<div id="outline-container-org9fecbea" class="outline-3">
+<h3 id="org9fecbea">Timestamp</h3>
+<div class="outline-text-3" id="text-org9fecbea">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;;    </span><span style="font-weight: bold; font-style: italic;">(setq-default org-display-custom-times t)</span>
 <span style="font-weight: bold; font-style: italic;">;;    </span><span style="font-weight: bold; font-style: italic;">(setq org-time-stamp-custom-formats '("&lt;%Y-%m-%d %H:%M&gt;" . "&lt;%H:%M&gt;"))</span>
@@ -276,12 +271,12 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-org45ab6b0" class="outline-3">
-<h3 id="org45ab6b0">UI</h3>
-<div class="outline-text-3" id="text-org45ab6b0">
+<div id="outline-container-orgf9b7204" class="outline-3">
+<h3 id="orgf9b7204">UI</h3>
+<div class="outline-text-3" id="text-orgf9b7204">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">  (<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">org-bullets</span>)
-  (use-package org-bullets
+  (<span style="font-weight: bold;">use-package</span> org-bullets
                <span style="font-weight: bold;">:hook</span> (org-mode . org-bullets-mode)
                <span style="font-weight: bold;">:custom</span>
                (org-bullets-bullet-list '(<span style="font-style: italic;">"&#9673;"</span> <span style="font-style: italic;">"&#9675;"</span> <span style="font-style: italic;">"&#9679;"</span> <span style="font-style: italic;">"&#9675;"</span> <span style="font-style: italic;">"&#9679;"</span> <span style="font-style: italic;">"&#9675;"</span> <span style="font-style: italic;">"&#9679;"</span>))
@@ -302,9 +297,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-org32b626b" class="outline-3">
-<h3 id="org32b626b">Inline image display</h3>
-<div class="outline-text-3" id="text-org32b626b">
+<div id="outline-container-org045751b" class="outline-3">
+<h3 id="org045751b">Inline image display</h3>
+<div class="outline-text-3" id="text-org045751b">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> image-file-name-extensions
    (<span style="font-weight: bold;">quote</span>
@@ -367,11 +362,11 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-orgf3550d8" class="outline-3">
-<h3 id="orgf3550d8">Org-tree-slide</h3>
-<div class="outline-text-3" id="text-orgf3550d8">
+<div id="outline-container-org1ad5b5b" class="outline-3">
+<h3 id="org1ad5b5b">Org-tree-slide</h3>
+<div class="outline-text-3" id="text-org1ad5b5b">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(use-package hide-mode-line)
+<pre class="src src-emacs-lisp">(<span style="font-weight: bold;">use-package</span> hide-mode-line)
 (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">presentation-setup</span> ()
   (hide-mode-line-mode 1)
   (org-display-inline-images))
@@ -379,7 +374,7 @@ scroll-conservatively 10000)
 (<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">presentation-end</span> ()
   (hide-mode-line-mode 0))
 
-(use-package org-tree-slide
+(<span style="font-weight: bold;">use-package</span> org-tree-slide
   <span style="font-weight: bold;">:hook</span> ((org-tree-slide-play . presentation-setup)
          (org-tree-slide-stop . presentation-end))
   <span style="font-weight: bold;">:custom</span>
@@ -394,9 +389,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-org9572ceb" class="outline-3">
-<h3 id="org9572ceb">keymaps</h3>
-<div class="outline-text-3" id="text-org9572ceb">
+<div id="outline-container-org81f6994" class="outline-3">
+<h3 id="org81f6994">keymaps</h3>
+<div class="outline-text-3" id="text-org81f6994">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(global-set-key (kbd <span style="font-style: italic;">"C-c l"</span>) 'org-store-link)
 (global-set-key (kbd <span style="font-style: italic;">"C-c a"</span>) 'org-agenda)
@@ -407,9 +402,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-orgb128709" class="outline-3">
-<h3 id="orgb128709">Babel</h3>
-<div class="outline-text-3" id="text-orgb128709">
+<div id="outline-container-org0db1619" class="outline-3">
+<h3 id="org0db1619">Babel</h3>
+<div class="outline-text-3" id="text-org0db1619">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> org-confirm-babel-evaluate nil)
 
@@ -432,9 +427,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org8b4446c" class="outline-3">
-<h3 id="org8b4446c">Agenda customization</h3>
-<div class="outline-text-3" id="text-org8b4446c">
+<div id="outline-container-org6352f94" class="outline-3">
+<h3 id="org6352f94">Agenda customization</h3>
+<div class="outline-text-3" id="text-org6352f94">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> org-directory <span style="font-style: italic;">"~/org/"</span>)
 (<span style="font-weight: bold;">setq</span> org-agenda-files
@@ -451,29 +446,15 @@ scroll-conservatively 10000)
 (<span style="font-weight: bold;">setq</span> org-startup-folded t)
 (<span style="font-weight: bold;">setq</span> org-agenda-custom-commands
       '(
-        (<span style="font-style: italic;">"d"</span> <span style="font-style: italic;">"Daily agenda and High-prio projects"</span>
+        (<span style="font-style: italic;">"d"</span> <span style="font-style: italic;">"Daily agenda"</span>
          (
-          (tags <span style="font-style: italic;">"PRIORITY=\"A\""</span>
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-overriding-header <span style="font-style: italic;">"High-priority unfinished projects:"</span>)))
-          (agenda <span style="font-style: italic;">""</span>     ((org-agenda-span 'day)) )
-  <span style="font-weight: bold; font-style: italic;">;;                          </span><span style="font-weight: bold; font-style: italic;">(alltodo ""</span>
-  <span style="font-weight: bold; font-style: italic;">;;                                   </span><span style="font-weight: bold; font-style: italic;">((org-agenda-skip-function '(or (air-org-skip-subtree-if-habit)</span>
-  <span style="font-weight: bold; font-style: italic;">;;                                                                   </span><span style="font-weight: bold; font-style: italic;">(air-org-skip-subtree-if-priority ?A)</span>
-  <span style="font-weight: bold; font-style: italic;">;;                                                                   </span><span style="font-weight: bold; font-style: italic;">(org-agenda-skip-if nil '(scheduled deadline))))</span>
-  <span style="font-weight: bold; font-style: italic;">;;                                    </span><span style="font-weight: bold; font-style: italic;">(org-agenda-overriding-header "ALL normal priority tasks:")))</span>
-
-
+          (agenda <span style="font-style: italic;">""</span>     ((org-agenda-span 'day)))
           )
          ((org-agenda-compact-blocks t))
          )
 
         (<span style="font-style: italic;">"w"</span> <span style="font-style: italic;">"Next 3 days"</span>
          (
-
-          (tags <span style="font-style: italic;">"PRIORITY=\"A\""</span>
-                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                 (org-agenda-overriding-header <span style="font-style: italic;">"High-priority unfinished projects:"</span>)))
           ( agenda <span style="font-style: italic;">""</span>     ((org-agenda-span 3)) )
 
           )
@@ -490,25 +471,22 @@ scroll-conservatively 10000)
 
         (<span style="font-style: italic;">"C"</span> <span style="font-style: italic;">"Tasks by context"</span>
          (
-          (tags <span style="font-style: italic;">"work|learn"</span>
+          (tags <span style="font-style: italic;">"work|techLearn"</span>
                 (
-                 (org-agenda-overriding-header <span style="font-style: italic;">"Work Learn"</span>)
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
-                 <span style="font-weight: bold; font-style: italic;">;</span><span style="font-weight: bold; font-style: italic;">(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)</span>
+                 (org-agenda-overriding-header <span style="font-style: italic;">"work|techLearn"</span>)
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '(<span style="font-style: italic;">"TODO"</span> <span style="font-style: italic;">"NEXT"</span> <span style="font-style: italic;">"WAIT"</span> <span style="font-style: italic;">"INPROGRESS"</span>) ))
                  )
                 )
-          (tags <span style="font-style: italic;">"hobby|relax|sport"</span>
+          (tags <span style="font-style: italic;">"relax|creative|sport|hobby"</span>
                 (
-                 (org-agenda-overriding-header <span style="font-style: italic;">"Hobby Relax Sport"</span>)
-                 <span style="font-weight: bold; font-style: italic;">;</span><span style="font-weight: bold; font-style: italic;">(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)</span>
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
+                 (org-agenda-overriding-header <span style="font-style: italic;">"relax|creative|sport|hobby"</span>)
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '(<span style="font-style: italic;">"TODO"</span> <span style="font-style: italic;">"NEXT"</span> <span style="font-style: italic;">"WAIT"</span> <span style="font-style: italic;">"INPROGRESS"</span>) ))
                  )
                 )
-          (tags <span style="font-style: italic;">"coding"</span>
+          (tags <span style="font-style: italic;">"planning"</span>
                 (
-                 (org-agenda-overriding-header <span style="font-style: italic;">"Coding"</span>)
-                 <span style="font-weight: bold; font-style: italic;">;</span><span style="font-weight: bold; font-style: italic;">(org-agenda-skip-function #'my-org-agenda-skip-all-siblings-but-first)</span>
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'done))
+                 (org-agenda-overriding-header <span style="font-style: italic;">"planning"</span>)
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '(<span style="font-style: italic;">"TODO"</span> <span style="font-style: italic;">"NEXT"</span> <span style="font-style: italic;">"WAIT"</span> <span style="font-style: italic;">"INPROGRESS"</span>) ))
                  )
                 )
           )
@@ -516,52 +494,14 @@ scroll-conservatively 10000)
         )
       )
 
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">air-org-skip-subtree-if-priority</span> (priority)
-  <span style="font-style: italic;">"Skip an agenda subtree if it has a priority of PRIORITY.</span>
-
-<span style="font-style: italic;">                  PRIORITY may be one of the characters ?A, ?B, or ?C."</span>
-  (<span style="font-weight: bold;">let</span> ((subtree-end (<span style="font-weight: bold;">save-excursion</span> (org-end-of-subtree t)))
-        (pri-value (* 1000 (- org-lowest-priority priority)))
-        (pri-current (org-get-priority (thing-at-point 'line t))))
-    (<span style="font-weight: bold;">if</span> (= pri-value pri-current)
-        subtree-end
-      nil)))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">air-org-skip-subtree-if-habit</span> ()
-  <span style="font-style: italic;">"Skip an agenda entry if it has a STYLE property equal to \"habit\"."</span>
-  (<span style="font-weight: bold;">let</span> ((subtree-end (<span style="font-weight: bold;">save-excursion</span> (org-end-of-subtree t))))
-    (<span style="font-weight: bold;">if</span> (string= (org-entry-get nil <span style="font-style: italic;">"STYLE"</span>) <span style="font-style: italic;">"habit"</span>)
-        subtree-end
-      nil)))
-
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">my-org-agenda-skip-all-siblings-but-first</span> ()
-  <span style="font-style: italic;">"Skip all but the first non-done entry."</span>
-  (<span style="font-weight: bold;">let</span> (should-skip-entry)
-    (<span style="font-weight: bold;">unless</span> (org-current-is-todo)
-      (<span style="font-weight: bold;">setq</span> should-skip-entry t))
-    (<span style="font-weight: bold;">save-excursion</span>
-      (<span style="font-weight: bold;">while</span> (<span style="font-weight: bold;">and</span> (not should-skip-entry) (org-goto-sibling t))
-        (<span style="font-weight: bold;">when</span> (org-current-is-todo)
-          (<span style="font-weight: bold;">setq</span> should-skip-entry t))))
-    (<span style="font-weight: bold;">when</span> should-skip-entry
-      (<span style="font-weight: bold;">or</span> (outline-next-heading)
-          (goto-char (point-max))))))
-
-(<span style="font-weight: bold;">defun</span> <span style="font-weight: bold;">org-current-is-todo</span> ()
-  (<span style="font-weight: bold;">or</span> (string= <span style="font-style: italic;">"TODO"</span> (org-get-todo-state)) (string= <span style="font-style: italic;">"NEXT"</span> (org-get-todo-state)))
-
-  )
-
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc515603" class="outline-3">
-<h3 id="orgc515603">Capturing and refiling</h3>
-<div class="outline-text-3" id="text-orgc515603">
+<div id="outline-container-org14afc91" class="outline-3">
+<h3 id="org14afc91">Capturing and refiling</h3>
+<div class="outline-text-3" id="text-org14afc91">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Refiling tasks</span>
 (<span style="font-weight: bold;">setq</span> org-refile-targets '((<span style="font-style: italic;">"~/Dropbox/org/projects.org"</span> <span style="font-weight: bold;">:maxlevel</span> . 3)
@@ -587,9 +527,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org5f90b32" class="outline-3">
-<h3 id="org5f90b32">Habits</h3>
-<div class="outline-text-3" id="text-org5f90b32">
+<div id="outline-container-org0ec458a" class="outline-3">
+<h3 id="org0ec458a">Habits</h3>
+<div class="outline-text-3" id="text-org0ec458a">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">require</span> '<span style="font-weight: bold; text-decoration: underline;">org-habit</span>)
 (add-to-list 'org-modules 'org-habit)
@@ -598,22 +538,34 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-</div>
 
-<div id="outline-container-org4fa74fd" class="outline-2">
-<h2 id="org4fa74fd">Embark</h2>
-<div class="outline-text-2" id="text-org4fa74fd">
-</div>
-<div id="outline-container-orgac044fc" class="outline-3">
-<h3 id="orgac044fc">General setup</h3>
-<div class="outline-text-3" id="text-orgac044fc">
+
+
+<div id="outline-container-org1ba9aa1" class="outline-3">
+<h3 id="org1ba9aa1">Calendar export</h3>
+<div class="outline-text-3" id="text-org1ba9aa1">
 <div class="org-src-container">
-<pre class="src src-emacs-lisp">(use-package marginalia
+<pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> org-icalendar-include-todo t)
+(<span style="font-weight: bold;">setq</span> org-icalendar-force-alarm t)
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org2479844" class="outline-2">
+<h2 id="org2479844">Embark</h2>
+<div class="outline-text-2" id="text-org2479844">
+</div>
+<div id="outline-container-org4c117bb" class="outline-3">
+<h3 id="org4c117bb">General setup</h3>
+<div class="outline-text-3" id="text-org4c117bb">
+<div class="org-src-container">
+<pre class="src src-emacs-lisp">(<span style="font-weight: bold;">use-package</span> marginalia
   <span style="font-weight: bold;">:ensure</span> t
   <span style="font-weight: bold;">:config</span>
   (marginalia-mode))
 
-(use-package embark
+(<span style="font-weight: bold;">use-package</span> embark
   <span style="font-weight: bold;">:ensure</span> t
 
   <span style="font-weight: bold;">:bind</span>
@@ -627,9 +579,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org7ee3041" class="outline-2">
-<h2 id="org7ee3041">Tex settings</h2>
-<div class="outline-text-2" id="text-org7ee3041">
+<div id="outline-container-org6131e72" class="outline-2">
+<h2 id="org6131e72">Tex settings</h2>
+<div class="outline-text-2" id="text-org6131e72">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">compile tex documents to pdf</span>
 (<span style="font-weight: bold;">setq</span> TeX-PDF-mode t)
@@ -643,9 +595,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org3cf43b5" class="outline-2">
-<h2 id="org3cf43b5">Hooks</h2>
-<div class="outline-text-2" id="text-org3cf43b5">
+<div id="outline-container-orgbc29ab2" class="outline-2">
+<h2 id="orgbc29ab2">Hooks</h2>
+<div class="outline-text-2" id="text-orgbc29ab2">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">before saving</span>
 (add-hook 'before-save-hook
@@ -667,13 +619,13 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-orgfae6f95" class="outline-3">
-<h3 id="orgfae6f95">Language specific hooks</h3>
-<div class="outline-text-3" id="text-orgfae6f95">
+<div id="outline-container-org0393f3d" class="outline-3">
+<h3 id="org0393f3d">Language specific hooks</h3>
+<div class="outline-text-3" id="text-org0393f3d">
 </div>
-<div id="outline-container-org8250547" class="outline-4">
-<h4 id="org8250547">awk</h4>
-<div class="outline-text-4" id="text-org8250547">
+<div id="outline-container-org556a760" class="outline-4">
+<h4 id="org556a760">awk</h4>
+<div class="outline-text-4" id="text-org556a760">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'awk-mode-hook
   (<span style="font-weight: bold;">lambda</span> ()
@@ -687,9 +639,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-org57f871d" class="outline-4">
-<h4 id="org57f871d">Fortran</h4>
-<div class="outline-text-4" id="text-org57f871d">
+<div id="outline-container-org0e6b7f5" class="outline-4">
+<h4 id="org0e6b7f5">Fortran</h4>
+<div class="outline-text-4" id="text-org0e6b7f5">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(<span style="font-weight: bold;">setq</span> auto-mode-alist
   (nconc
@@ -701,9 +653,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 </div>
-<div id="outline-container-org9e5a9bb" class="outline-4">
-<h4 id="org9e5a9bb">Makefile</h4>
-<div class="outline-text-4" id="text-org9e5a9bb">
+<div id="outline-container-org497ca34" class="outline-4">
+<h4 id="org497ca34">Makefile</h4>
+<div class="outline-text-4" id="text-org497ca34">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'makefile-mode-hook
   (<span style="font-weight: bold;">lambda</span> ()
@@ -715,9 +667,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org59d6ccb" class="outline-4">
-<h4 id="org59d6ccb">Gnuplot</h4>
-<div class="outline-text-4" id="text-org59d6ccb">
+<div id="outline-container-org453787b" class="outline-4">
+<h4 id="org453787b">Gnuplot</h4>
+<div class="outline-text-4" id="text-org453787b">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">
 (autoload 'gnuplot-mode <span style="font-style: italic;">"gnuplot"</span> <span style="font-style: italic;">"gnuplot major mode"</span> t)
@@ -736,9 +688,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org0e8278c" class="outline-4">
-<h4 id="org0e8278c">Emacs-lisp</h4>
-<div class="outline-text-4" id="text-org0e8278c">
+<div id="outline-container-org866804e" class="outline-4">
+<h4 id="org866804e">Emacs-lisp</h4>
+<div class="outline-text-4" id="text-org866804e">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'emacs-lisp-mode-hook
   (<span style="font-weight: bold;">lambda</span> ()
@@ -751,9 +703,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org3346ed2" class="outline-4">
-<h4 id="org3346ed2">Python</h4>
-<div class="outline-text-4" id="text-org3346ed2">
+<div id="outline-container-org2aba774" class="outline-4">
+<h4 id="org2aba774">Python</h4>
+<div class="outline-text-4" id="text-org2aba774">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'python-mode-hook
   (<span style="font-weight: bold;">lambda</span> ()
@@ -766,9 +718,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org6d9c790" class="outline-4">
-<h4 id="org6d9c790">Bash</h4>
-<div class="outline-text-4" id="text-org6d9c790">
+<div id="outline-container-orgce24426" class="outline-4">
+<h4 id="orgce24426">Bash</h4>
+<div class="outline-text-4" id="text-orgce24426">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'sh-mode-hook
   (<span style="font-weight: bold;">lambda</span> ()
@@ -783,9 +735,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org6418fbe" class="outline-4">
-<h4 id="org6418fbe">Text mode</h4>
-<div class="outline-text-4" id="text-org6418fbe">
+<div id="outline-container-org6859495" class="outline-4">
+<h4 id="org6859495">Text mode</h4>
+<div class="outline-text-4" id="text-org6859495">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'text-mode-hook
   (<span style="font-weight: bold;">lambda</span> ()
@@ -801,9 +753,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org89c016c" class="outline-4">
-<h4 id="org89c016c">Latex</h4>
-<div class="outline-text-4" id="text-org89c016c">
+<div id="outline-container-orgb9a2849" class="outline-4">
+<h4 id="orgb9a2849">Latex</h4>
+<div class="outline-text-4" id="text-orgb9a2849">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp">(add-hook 'LaTeX-mode-hook 'reftex-mode)
 </pre>
@@ -813,9 +765,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-org352f0c5" class="outline-2">
-<h2 id="org352f0c5">Go</h2>
-<div class="outline-text-2" id="text-org352f0c5">
+<div id="outline-container-org8fa9dab" class="outline-2">
+<h2 id="org8fa9dab">Go</h2>
+<div class="outline-text-2" id="text-org8fa9dab">
 <div class="org-src-container">
 <pre class="src src-emacs-lisp"><span style="font-weight: bold; font-style: italic;">;; </span><span style="font-weight: bold; font-style: italic;">Company mode</span>
 (<span style="font-weight: bold;">setq</span> company-idle-delay 0)
@@ -838,9 +790,9 @@ scroll-conservatively 10000)
 </div>
 </div>
 
-<div id="outline-container-orgd28f919" class="outline-2">
-<h2 id="orgd28f919">load themes</h2>
-<div class="outline-text-2" id="text-orgd28f919">
+<div id="outline-container-org1ec1758" class="outline-2">
+<h2 id="org1ec1758">load themes</h2>
+<div class="outline-text-2" id="text-org1ec1758">
 <ul class="org-ul">
 <li>dark themes</li>
 </ul>
